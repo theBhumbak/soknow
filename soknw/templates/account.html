@@ -1,0 +1,83 @@
+{% extends "layout.html" %} 
+{% block content %}
+
+<h5 class="black-text center-align">Account Info</h5>
+<div class="section">
+    <div class="col s12 m8 offset-m2 l6 offset-l3 card white">
+        <div class="card-content lighten-5 ">
+            <div class="section">
+                <!-- TODO : for small screen stack them -->
+                <div class="col s2 center-align">
+                    <img src="{{ avtar }}" alt="user avtar" class="circle responsive-img z-depth-3 "> 
+                </div>
+                <div class="col s10 container center-align">
+                    <h3 style="vertical-align: top"  class=""> {{ current_user.name }}</h3>
+                </div>
+            </div>
+            <form action="" method="post" class="section" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="">
+                    
+                    <div class="input-field">
+                        <i class="material-icons prefix black-text">person</i>
+                        {{ form.name(type="text", id="name") }}
+                        {{ form.name.label(for="name") }}
+                    </div>
+                    <div class="input-field">
+                        <i class="material-icons prefix black-text">account_box</i>
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(type="text", id="username") }}
+                        {% endif %}
+                        {{ form.username.label(for="username") }}
+                    </div>
+                    <div class="input-field">
+                        <i class="material-icons prefix black-text">email</i>
+                        {{ form.email(type="email", id="email") }}
+                        {{ form.email.label(for="email") }}
+
+                        {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                        <br><span class="red-text">{{ error }}</span></br>
+                        
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                    <div class = "file-field input-field row">
+                        <div class = "col">
+                            <i class="material-icons prefix black-text">insert_photo</i>
+                        </div>
+                        <div class = "col">
+                            {{ form.avtar(type="file", id="avtar") }}
+                        </div>
+                        <div class = "file-path-wrapper off ">
+                            
+                            {{ form.avtar(class="file-path validate offset-l3", type = "text", placeholder = 'Update Profile Picture', id="avtar") }}
+                            <!-- <input class = "file-path validate" type = "text"
+                                placeholder = "Upload file" /> -->
+                        </div>
+                        {% if form.avtar.errors %}
+                            {% for error in form.avtar.errors %}
+                            <br><span class="text-red">{{ error }}</span></br>
+                            
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="btn waves-effect waves-light indigo accent-4 section"  style="border-radius:25px">
+                        {{ form.submit(class="white-text", id="submit")}}
+                        <i class="material-icons right">keyboard_capslock</i>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

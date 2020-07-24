@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="col s12 m6 section">
+        <form action="" method="post" class="card  white ">
+            {{ form.hidden_tag() }}
+            <div class="card-content white-text">
+                <span class="card-title black-text center-align">Login To Continue </span>
+
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">email</i>
+                    {{ form.email(type="email", id="email") }}
+                    {{ form.email.label(for="email") }}
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">vpn_key</i>
+                    {{ form.password(type="password", id="password") }}
+                    {{ form.password.label(for="password") }}
+                </div>
+                    <p>
+                        <label>
+                            {{ form.remember(type="checkbox", class="black")}}
+                            <span>remember me</span>
+                        </label>
+                    </p>
+                <section class="section">
+                    <div class="btn rounded hoverable waves-effect waves-light indigo accent-4 " style="border-radius:25px">
+                        {{ form.submit(class="white-text", id="submit")}}
+                        <i class="material-icons right">send</i>
+                    </div>
+                    <small class="btn-flat hoverable waves-effect waves-dark black-text right">
+                        <a href="#" class="">Forgot Password?</a>
+                    </small>
+                </section>
+                
+                
+            </div>
+        </form>
+    </div>
+    <small class= "right-align">
+        Need An Account ?
+        <a href="{{ url_for('register') }}" class="ml-2">Sign Up Now</a>
+    </small>
+{% endblock %}

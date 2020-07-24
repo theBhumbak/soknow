@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="col s12 m6 section">
+        <form action="" method="post" class="card  white">
+            {{ form.hidden_tag() }}
+            <div class="card-content white-text">
+                <span class="card-title black-text center-align">Join Today</span>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">person</i>
+                    {{ form.name(type="text", id="name") }}
+                    {{ form.name.label(for="name") }}
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">account_box</i>
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(type="text", id="username") }}
+                    {% endif %}
+                    {{ form.username.label(for="username") }}
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">email</i>
+                    {{ form.email(type="email", id="email") }}
+                    {{ form.email.label(for="email") }}
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">vpn_key</i>
+                    {{ form.password(type="password", id="password") }}
+                    {{ form.password.label(for="password") }}
+                </div>
+                <div class="input-field">
+                    <i class="material-icons prefix black-text">vpn_key</i>
+                    {{ form.confirm_password(type="password", id="confirm_password") }}
+                    {{ form.confirm_password.label(for="confirm_password") }}
+                </div>
+                <div class="btn waves-effect waves-light indigo accent-4 section"  style="border-radius:25px">
+                    {{ form.submit(class="white-text", id="submit")}}
+                    <i class="material-icons right">send</i>
+                </div>
+            </div>
+        </form>
+    </div>
+    <small class="black-text right-align">
+        Already Have An Account ?
+        <a href="{{ url_for('login') }}" class="ml-2">Sign In</a>
+    </small>
+{% endblock %}
