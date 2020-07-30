@@ -1,0 +1,10 @@
+
+
+conda activate soknw/soknow
+$env:FLASK_APP = "soknw"
+$env:FLASK_DEBUG=1
+flask run
+
+export FLASK_APP=soknw
+export FLASK_ENV=development
+flask run
