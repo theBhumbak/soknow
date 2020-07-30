@@ -26,7 +26,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
-    cover = db.Column(db.String(20), nullable=False, default='defaulcover.jpg')
+    cover = db.Column(db.String(20), nullable=False, default=f'static/images/Bookcovers/defaulcover.jpg')
     date_posted = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     discription = db.Column(db.Text, nullable=True)
     library = db.relationship('Library', backref='book', lazy=True)

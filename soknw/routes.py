@@ -10,25 +10,7 @@ from soknw import app, db
 from soknw.forms import LoginForm, RegistrationForm, UpdateAccountForm
 from soknw.models import Book, Library, User
 
-books = [
-        {
-            'author':'Sumit Bhumbak',
-            "image":" static\\images\\rashtravardhan.jpg ",
-            "image_txt":" Kelly Sikkema ",
-            'title':'Transforming India',
-            'discription':'''in this book we look at the ways to make India the best country in the world''',
-            'date_posted':'Feb 3rd, 2020'
-        },
-        {
-            'author':'Sumit Bhumbak',
-            "image":" static\\images\\thoughtcatalogGz.jpg ",
-            "image_txt":"Morgan House",
-            'title':'Changing The World',
-            'discription':'''in this book we see how we are chinging thw world how can we further change this world for good''',
-            'date_posted':'Feb 3rd, 2020'
-        }
-    ]
-    
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -80,6 +62,7 @@ def logout():
 @app.route('/library')
 @login_required
 def library():
+    books = Book.query.all()
     return render_template('library.html', books=books, title='Library')
 
 
@@ -126,3 +109,9 @@ def account():
     avtar = url_for('static', filename = f'images/Profile_pictures/{ current_user.avtar }')
     # { current_user.avtar }
     return render_template('account.html', title='Account', avtar=avtar, form=form)
+
+
+@app.route("/library/<int:book_id>/")
+def book(book_id):
+    book = Book.query.get_or_404(book_id)
+    return render_template('book.html', title=book.title, book=book)
