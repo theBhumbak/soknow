@@ -30,16 +30,18 @@ class Book(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     discription = db.Column(db.Text, nullable=True)
     library = db.relationship('Library', backref='book', lazy=True)
+    bookfiles = db.relationship('Bookfiles', backref='book', lazy=True) 
 
     def __repr__(self):
         return f"User('{self.title}', '{self.author}')"
 
+
 class Library(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    part = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     mode = db.Column(db.Integer, nullable=False)
-    progress = db.Column(db.Integer, nullable=False, default=0)
 
     def __repr__(self):
-        return f"User('{self.book}', '{self.mode}, {self.progress}')"
+        return f"User('{self.book}', '{self.user}', '{self.mode}', '{self.progress}')"
