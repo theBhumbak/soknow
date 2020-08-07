@@ -113,5 +113,9 @@ def account():
 
 @app.route("/library/<int:book_id>/")
 def book(book_id):
-    book = Book.query.get_or_404(book_id)
-    return render_template('book.html', title=book.title, book=book)
+    print('book_id: ',book_id)
+    book = Library.query.filter_by(book_id=book_id).all()
+    print('book: ',book)
+    book = book[0].title
+    print('book loc: ',book)
+    return render_template(book)
