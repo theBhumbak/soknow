@@ -14,7 +14,11 @@ from soknw.models import Book, Library, User
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    book = open('soknw/static/Books/09_Chapter_1_Finite_and.txt', 'r')
+    bdata = book.read()
+    book.close()
+    print("type of file :: >>> ",type(bdata));
+    return render_template('home.html',title='book',bookhtml = bdata)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

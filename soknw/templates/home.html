@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1> Home Page</h1>
+<main id="main"> {{ bookhtml| safe}}</main>
+<!-- 
+<script>
+    document.querySelector('#main').innerHTML  =  '{{ bookhtml }}' ;
+</script> -->
+
 {% endblock %}
