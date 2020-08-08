@@ -13,12 +13,14 @@
                             <div class="determinate black" style="width: 70%"></div>
                         </div>
                         <p>by {{ book.author }}</p>
+                        
+                        <p>ID :  {{ book.id }}</p>
                         <p>posted on {{ book.date_posted }}</p>
                         <p> {{ book.discription }} </p>
                         
                     </div>
                     <div class="card-action">
-                        <a href="#"> Record </a>
+                    <a href="/library/{{ book.id }}/"> Record </a>
                         <a href="#"> Share  </a>
                     </div>
                 </div>
