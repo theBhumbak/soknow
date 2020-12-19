@@ -1,24 +1,21 @@
 import os
 import secrets
-
+import PyPDF2
 import bcrypt
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, send_file, send_from_directory, abort
 from flask_login import current_user, login_required, login_user, logout_user
 from PIL import Image
 
 from soknw import app, db
 from soknw.forms import LoginForm, RegistrationForm, UpdateAccountForm
-from soknw.models import Book, Library, User
+from soknw.models import Book, User
 
 
 @app.route('/')
 @app.route('/home')
 def home():
-    book = open('soknw/static/Books/09_Chapter_1_Finite_and.txt', 'r')
-    bdata = book.read()
-    book.close()
-    print("type of file :: >>> ",type(bdata));
-    return render_template('home.html',title='book',bookhtml = bdata)
+    
+    return render_template('home.html',title='book')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -117,9 +114,35 @@ def account():
 
 @app.route("/library/<int:book_id>/")
 def book(book_id):
-    print('book_id: ',book_id)
-    book = Library.query.filter_by(book_id=book_id).all()
-    print('book: ',book)
-    book = book[0].title
-    print('book loc: ',book)
-    return render_template(book)
+    book = Book.query.get(book_id)
+    book_title = book.title
+    book_id = book_id
+    return render_template('book.html', title='book', book_title =book_title, book_id = book_id)
+
+
+app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
+
+
+@app.route("/library/get/<int:book_id>/")
+def getbook(book_id):
+    bookname = Book.query.get(book_id).title
+
+    try:
+        return send_from_directory(
+            app.config["allbooks"], filename=bookname, as_attachment=False
+            )
+    except FileNotFoundError:
+        abort(404)
+        
+
+        # dfjf
+
+
+
+
+
+# routefor favicon
+
+@app.route("/favicon.ico")
+def favicon():
+	return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico',mimetype='image/vnd.microsof.icon')

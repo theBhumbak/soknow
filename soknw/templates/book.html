@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="title">{{ book_title }}
+  <span hidden id="book_id" >{{ book_id }}</span>
+</h2>
+<canvas id="pdf-canvas"></canvas>
+<div>
+  <span class="page-info">
+    Page <span id="page-num"></span> of <span id="page-count"></span>
+  </span>
+</div>
+
+<button class="btn rounded hoverable waves-effect waves-light indigo accent-4 " id="prev-page" > <i class="material-icons left">keyboard_arrow_left</i>PREV </button>
+<button class="btn rounded hoverable waves-effect waves-light indigo accent-4 " id="next-page" > <i class="material-icons right">keyboard_arrow_right</i>Next </button>
+
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.5.207/build/pdf.min.js"></script>
+<script type="text/javascript"  src ="{{url_for('static', filename='render_pdf.js')}}"></script>
+{% endblock %}

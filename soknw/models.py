@@ -9,6 +9,10 @@ from soknw import db, login_manager
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+reads = db.Table('reads',
+    db.Column('user_id',db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('book_id',db.Integer, db.ForeignKey('book.id'), primary_key=True))
+    
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +21,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     avtar =  db.Column(db.String(20), nullable=False, default='defaultavtar.jpg')
     password= db.Column(db.String(60), nullable=False)
-    library = db.relationship('Library', backref='user', lazy=True)
+    readin = db.relationship('Book', secondary=reads, backref=db.backref('reader', lazy = 'dynamic') )
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.avtar}')"
@@ -29,21 +33,7 @@ class Book(db.Model):
     cover = db.Column(db.String(20), nullable=False, default=f'static/images/Bookcovers/defaulcover.jpg')
     date_posted = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     discription = db.Column(db.Text, nullable=True)
-    library = db.relationship('Library', backref='book', lazy=True)
-    
+    # reader = db.relationship("User", secondary='Reads', backref=db.backref('reader', lazy = 'dynamic'))
 
     def __repr__(self):
         return f"User('{self.title}', '{self.author}')"
-
-
-class Library(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-    part = db.Column(db.Integer, nullable=False)
-    title = db.Column(db.String(200), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=1)
-    mode = db.Column(db.Integer, nullable=False,default=0)
-
-
-    def __repr__(self):
-        return f"User('{self.book}', '{self.user}', '{self.mode}'"
