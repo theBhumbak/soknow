@@ -1,4 +1,4 @@
-const url = 'http://127.0.0.1:5000/library/get/',
+const url = 'https://soknow.herokuapp.com/library/library/get/',
     book_id = document.querySelector('#book_id').textContent;
 
 let pdfDoc = null,
