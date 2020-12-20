@@ -1,11 +1,10 @@
 import os
-import secrets
-import PyPDF2
+import string 
+import random 
 import bcrypt
 from flask import Flask, flash, redirect, render_template, request, url_for, send_file, send_from_directory, abort
 from flask_login import current_user, login_required, login_user, logout_user
 from PIL import Image
-
 from soknw import app, db
 from soknw.forms import LoginForm, RegistrationForm, UpdateAccountForm
 from soknw.models import Book, User
@@ -68,10 +67,15 @@ def library():
 
 
 def save_avtar(avtar):
+
     # createing random string for name of  picture
-    random_hex = secrets.token_hex(8)
-    print('---> random_hex is',random_hex)
-    # ( _ ) => unused varible, dont bother your ide
+
+    # initializing size of string  
+    N = 8
+    random_hex = ''.join(random.choices(string.ascii_uppercase + 
+            string.digits, k = N))
+    
+    
     # extracting file name and file extention    
     _, f_ext = os.path.splitext(avtar.filename)
     image_flnm = random_hex + f_ext # new name for file
@@ -134,11 +138,6 @@ def getbook(book_id):
     except FileNotFoundError:
         abort(404)
         
-
-        # dfjf
-
-
-
 
 
 # routefor favicon
