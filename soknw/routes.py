@@ -58,9 +58,7 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
 @app.route('/library')
-@login_required
 def library():
     books = Book.query.all()
     return render_template('library.html', books=books, title='Library')
@@ -75,7 +73,7 @@ def save_avtar(avtar):
     random_hex = ''.join(random.choices(string.ascii_uppercase + 
             string.digits, k = N))
     
-    
+
     # extracting file name and file extention    
     _, f_ext = os.path.splitext(avtar.filename)
     image_flnm = random_hex + f_ext # new name for file
