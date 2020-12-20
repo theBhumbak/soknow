@@ -1,38 +1,21 @@
 import os
 import secrets
-
+import PyPDF2
 import bcrypt
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, send_file, send_from_directory, abort
 from flask_login import current_user, login_required, login_user, logout_user
 from PIL import Image
 
 from soknw import app, db
 from soknw.forms import LoginForm, RegistrationForm, UpdateAccountForm
-from soknw.models import Book, Library, User
+from soknw.models import Book, User
 
-books = [
-        {
-            'author':'Sumit Bhumbak',
-            "image":" static\\images\\rashtravardhan.jpg ",
-            "image_txt":" Kelly Sikkema ",
-            'title':'Transforming India',
-            'discription':'''in this book we look at the ways to make India the best country in the world''',
-            'date_posted':'Feb 3rd, 2020'
-        },
-        {
-            'author':'Sumit Bhumbak',
-            "image":" static\\images\\thoughtcatalogGz.jpg ",
-            "image_txt":"Morgan House",
-            'title':'Changing The World',
-            'discription':'''in this book we see how we are chinging thw world how can we further change this world for good''',
-            'date_posted':'Feb 3rd, 2020'
-        }
-    ]
-    
+
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    
+    return render_template('home.html',title='book')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -80,6 +63,7 @@ def logout():
 @app.route('/library')
 @login_required
 def library():
+    books = Book.query.all()
     return render_template('library.html', books=books, title='Library')
 
 
@@ -126,3 +110,39 @@ def account():
     avtar = url_for('static', filename = f'images/Profile_pictures/{ current_user.avtar }')
     # { current_user.avtar }
     return render_template('account.html', title='Account', avtar=avtar, form=form)
+
+
+@app.route("/library/<int:book_id>/")
+def book(book_id):
+    book = Book.query.get(book_id)
+    book_title = book.title
+    book_id = book_id
+    return render_template('book.html', title='book', book_title =book_title, book_id = book_id)
+
+
+app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
+
+
+@app.route("/library/get/<int:book_id>/")
+def getbook(book_id):
+    bookname = Book.query.get(book_id).title
+
+    try:
+        return send_from_directory(
+            app.config["allbooks"], filename=bookname, as_attachment=False
+            )
+    except FileNotFoundError:
+        abort(404)
+        
+
+        # dfjf
+
+
+
+
+
+# routefor favicon
+
+@app.route("/favicon.ico")
+def favicon():
+	return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico',mimetype='image/vnd.microsof.icon')

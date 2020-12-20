@@ -5,7 +5,7 @@
             <div class="col s12 m7">
                 <div class="card hoverable">
                     <div class="card-image">
-                        <img src={{ book.image }} alt={{ book.image_txt }}>
+                        <img src={{ book.cover }} alt={{ book.image_txt }}>
                         <span class="card-title"><h4>{{ book.title }}</h4></span>
                     </div>
                     <div class="card-content">
@@ -13,12 +13,14 @@
                             <div class="determinate black" style="width: 70%"></div>
                         </div>
                         <p>by {{ book.author }}</p>
+                        
+                        <p>ID :  {{ book.id }}</p>
                         <p>posted on {{ book.date_posted }}</p>
                         <p> {{ book.discription }} </p>
                         
                     </div>
                     <div class="card-action">
-                        <a href="#"> Record </a>
+                    <a href="/library/{{ book.id }}/"> Read </a>
                         <a href="#"> Share  </a>
                     </div>
                 </div>
