@@ -24,7 +24,7 @@ def register():
     print(form.validate_on_submit())
 
     if form.validate_on_submit():
-        hashed = bcrypt.hashpw(form.password.data.encode(), bcrypt.gensalt()).decode('utf-8')
+        hashed = bcrypt.hashpw(form.password.data.encode(utf8), bcrypt.gensalt()).decode('utf-8')
         print('check 4')
         user = User(username=form.username.data,name=form.name.data,email=form.email.data,password=hashed)
         print('check 5')
@@ -42,7 +42,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        print('password', bcrypt.checkpw(form.password.data.encode(), user.password.encode()))
+        print('password', bcrypt.checkpw(form.password.data.encode(utf8), user.password.encode()))
         if user and bcrypt.checkpw(form.password.data.encode(), user.password.encode()):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -122,7 +122,9 @@ def book(book_id):
     return render_template('book.html', title='book', book_title =book_title, book_id = book_id)
 
 
-app.config['allbooks']="app/soknw/static/books/PDFs"
+# app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
+
+app.config['allbooks']="/app/soknw/static/books/PDFs"
 
 
 @app.route("/library/get/<int:book_id>/")
