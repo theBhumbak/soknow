@@ -9,6 +9,10 @@ from soknw import app, db
 from soknw.forms import LoginForm, RegistrationForm, UpdateAccountForm
 from soknw.models import Book, User
 
+#app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
+
+app.config['allbooks']="/app/soknw/static/books/PDFs"
+
 
 @app.route('/')
 @app.route('/home')
@@ -121,9 +125,7 @@ def book(book_id):
     return render_template('book.html', title='book', book_title =book_title, book_id = book_id)
 
 
-app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
 
-# app.config['allbooks']="/app/soknw/static/books/PDFs"
 
 
 @app.route("/library/get/<int:book_id>/")
