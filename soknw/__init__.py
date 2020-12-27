@@ -14,5 +14,6 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'red-text text-accent-1'
+
 # import routes from sonkw here(below everything else) to avoid complications of circular importing
 from soknw import routes
