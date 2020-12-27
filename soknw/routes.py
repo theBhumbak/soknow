@@ -16,8 +16,8 @@ from flask import (Flask, flash, redirect,
                     url_for, send_file, 
                     send_from_directory, abort)
 
-app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
-# app.config['allbooks']="/app/soknw/static/books/PDFs"
+# app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
+app.config['allbooks']="/app/soknw/static/books/PDFs"
 
 
 @app.route('/')
