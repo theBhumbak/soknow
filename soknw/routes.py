@@ -24,6 +24,8 @@ app.config['allbooks']= os.path.join(os.path.dirname(__file__), 'static/books/PD
 @app.route('/')
 @app.route('/home')
 def home():
+    if current_user.is_authenticated:
+        return redirect(url_for('library'))
     return render_template('home.html',title='Home')
 
 @app.route('/library')
