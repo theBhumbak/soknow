@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -10,7 +11,7 @@ from flask_admin import Admin
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='d2d97cb8f25a23d315d1174d054f27e6'
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI']=os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
