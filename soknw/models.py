@@ -27,10 +27,11 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
-    cover = db.Column(db.String(20), nullable=False, default=f'static/images/Bookcovers/defaulcover.jpg')
+    cover = db.Column(db.String(20), nullable=False, default=f'defaul.jpg')
     date_posted = db.Column(db.DateTime, nullable=False,default=datetime.utcnow)
     discription = db.Column(db.Text, nullable=True)
     # reader = db.relationship("User", secondary='Reads', backref=db.backref('reader', lazy = 'dynamic'))
 
+#  soknw/static/Bcov/defaul.jpg
     def __repr__(self):
         return f"User('{self.title}', '{self.author}')"

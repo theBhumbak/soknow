@@ -29,7 +29,7 @@ def home():
 @app.route('/library')
 def library():
     books = Book.query.all()
-    return render_template('library.html', books=books, title='Library')
+    return render_template('library.html', books=books, coverdic = "static/Bcov/", title='Library')
 
 @app.route("/library/<int:book_id>/")
 def book(book_id):
