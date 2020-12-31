@@ -1,8 +1,8 @@
-// const url = 'http://127.0.0.1:5000/library/get/',
-//     book_id = document.querySelector('#book_id').textContent;
-
-const url = 'https://soknow.herokuapp.com/library/get/',
+const url = 'http://127.0.0.1:5000/library/get/',
     book_id = document.querySelector('#book_id').textContent;
+
+// const url = 'https://soknow.herokuapp.com/library/get/',
+//     book_id = document.querySelector('#book_id').textContent;
 
 let pdfDoc = null,
     pageNum = 1,
@@ -10,7 +10,6 @@ let pdfDoc = null,
     pageNumIsPending = null;
 
 const scale = 1.0,
-    container = document.querySelector('#the-container'),
     cavas = document.querySelector('#pdf-canvas'),
     contex = cavas.getContext('2d');
 
@@ -21,10 +20,7 @@ const renderPage = num =>{
     // get the page
     pdfDoc.getPage(num).then(page =>{
         // set scale
-        var viewport = page.getViewport(1);
-        var scale = container.clientWidth / viewport.width;
-        viewport = page.getViewport(scale);
-        
+        const viewport = page.getViewport({scale});
         cavas.height = viewport.height;
         cavas.width = viewport.width;
 
