@@ -40,7 +40,7 @@ def book(book_id):
 
 @app.route("/library/get/<int:book_id>/")
 def getbook(book_id):
-    bookname = Book.query.get(book_id).title
+    bookname = Book.query.get(book_id).title + ".pdf"
 
     try:
         return send_from_directory(
