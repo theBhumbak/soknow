@@ -3,7 +3,8 @@ import string
 import random 
 import bcrypt
 from PIL import Image
-from soknw import app, db
+from flask_admin import AdminIndexView
+from soknw import app, db, admin
 from soknw.models import Book, User
 from soknw.forms import (LoginForm, 
                         RegistrationForm,
@@ -15,10 +16,10 @@ from flask import (Flask, flash, redirect,
                     render_template, request, 
                     url_for, send_file, 
                     send_from_directory, abort)
+from flask_admin.contrib.sqla import ModelView
+from flask_admin.contrib.fileadmin import FileAdmin
 
-# app.config['allbooks']="/mnt/d/Web/Flask projects/So_know/soknw/static/books/PDFs"
-app.config['allbooks']="/app/soknw/static/books/PDFs"
-
+app.config['allbooks']= os.path.join(os.path.dirname(__file__), 'static/books/PDFs')
 
 @app.route('/')
 @app.route('/home')
@@ -47,6 +48,35 @@ def getbook(book_id):
             )
     except FileNotFoundError:
         abort(404)
+
+# -------Admin Views------
+
+class MyModelView(ModelView):
+    def is_accessible(self):
+        print(f"current_user.is_authenticated : {current_user.is_authenticated} ; and current_user.id : {current_user.get_id()}; in os.environ(ADMINLS): {os.environ['ADMINLS']};")
+        return (current_user.is_authenticated 
+        and current_user.get_id() in os.environ['ADMINLS'])
+
+    def inaccessible_callback(self, name, **kwargs):
+        return "<h1>Only Admins Allowed</h1>"
+
+class MyAdminIndexView (AdminIndexView):
+    def is_accessible(self):
+        print(f"current_user.is_authenticated : {current_user.is_authenticated} ; and current_user.id : {current_user.get_id()}; in os.environ(ADMINLS): {os.environ['ADMINLS']};")
+        return (current_user.is_authenticated 
+        and current_user.get_id() in os.environ['ADMINLS'])
+
+    def inaccessible_callback(self, name, **kwargs):
+        return "<h1>Only Admins Allowed</h1>"
+
+# ---- path to ststic folder
+staticfilepath = os.path.join(os.path.dirname(__file__), 'static')
+
+# admin.init_app(app, index_view=MyAdminIndexView())
+admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Book, db.session))
+
+admin.add_view(FileAdmin(staticfilepath, '/static/', name='Static Files'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
