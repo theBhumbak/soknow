@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% for book in books %}
-        <div class="row section">
-            <div class="col s12 m7">
+    <div class="row">
+        {% for book in books %}
+            <div class="col s12 m6 l4">
                 <div class="card hoverable">
                     <div class="card-image">
                         <img src={{  coverdic + book.cover }} alt={{ book.image_txt }}>
@@ -16,7 +16,7 @@
                         
                         <p hidden >ID :  {{ book.id }}</p>
                         <p>posted on {{ book.date_posted }}</p>
-                        <p> {{ book.discription }} </p>
+                        <p> {{ book.discription or "" }} </p>
                         
                     </div>
                     <div class="card-action">
@@ -25,7 +25,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
