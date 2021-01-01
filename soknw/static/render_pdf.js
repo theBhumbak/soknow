@@ -9,7 +9,7 @@ let pdfDoc = null,
     pageIsRendering = false,
     pageNumIsPending = null;
 
-const scale = 1.0,
+const scale = 0.90,
     cavas = document.querySelector('#pdf-canvas'),
     contex = cavas.getContext('2d');
 
